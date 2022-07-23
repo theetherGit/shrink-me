@@ -4,15 +4,21 @@
 	let url: string;
 	let isURLGenerated: boolean = false;
 	let isInvalidURL: boolean = false;
-	function isValidURL(urlString: string): boolean {
-		const res = urlString.match(
-			/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
-		);
-		return res !== null;
+
+	function isValidHttpUrl(string) {
+		let url;
+
+		try {
+			url = new URL(string);
+		} catch (_) {
+			return false;
+		}
+
+		return url.protocol === 'http:' || url.protocol === 'https:';
 	}
 
 	async function getURL() {
-		if (isValidURL(url)) {
+		if (isValidHttpUrl(url)) {
 			const r = (Math.random() + 1).toString(36).substring(7);
 			const redirectURL = `${$page.url}${r}`;
 			isURLGenerated = true;
