@@ -2,7 +2,7 @@ import { createClient } from 'redis';
 import log from './log';
 import env from './env';
 
-const client = createClient({ url: env.REDIS_URL as string });
+const client = createClient({ url: process.env.REDIS_URL as string });
 
 let connectPromise: Promise<void> | undefined;
 let errorOnce = true;
