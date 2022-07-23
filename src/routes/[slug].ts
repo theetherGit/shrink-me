@@ -1,7 +1,7 @@
 import storage from '$lib/redisConnection';
 import type { RequestHandler } from '@sveltejs/kit';
 
-export const GET: RequestHandler = async ({  params }) => {
+export const GET: RequestHandler = async ({ params }) => {
 	if (params.slug.length > 3) {
 		return {
 			headers: {
@@ -15,6 +15,6 @@ export const GET: RequestHandler = async ({  params }) => {
 				Location: '/'
 			},
 			status: 302,
-            error: new Error('Short URL doesnt exist')
+			error: new Error('Short URL doesnt exist')
 		};
 };
