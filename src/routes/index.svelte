@@ -21,7 +21,6 @@
 		if (isValidHttpUrl(url)) {
 			const r = (Math.random() + 1).toString(36).substring(7);
 			const redirectURL = `${$page.url}${r}`;
-			isURLGenerated = true;
 			isInvalidURL = false;
 			const data = { key: r, url: url };
 			await fetch('/', {
@@ -32,6 +31,7 @@
 				body: JSON.stringify(data)
 			});
 			url = redirectURL;
+			isURLGenerated = true;
 		} else isInvalidURL = true;
 	}
 </script>
@@ -66,7 +66,9 @@
 			<div class="input-group relative flex items-stretch w-full mb-4">
 				<input
 					type="text"
-					class="form-control relative flex-auto block w-full border-b-2 px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding  border-gray-200  transition ease-in-out m-0 border-fuchsia-600 focus:text-gray-700 focus:bg-white focus:border-fuchsia-600 focus:outline-none duration-300"
+					class="form-control relative flex-auto block w-full border-b-2 px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding transition ease-in-out m-0 focus:outline-none duration-300 focus:text-gray-700 focus:bg-white {isURLGenerated
+						? 'border-emerald-600 focus:border-emerald-600'
+						: 'border-fuchsia-600 focus:border-fuchsia-600'}"
 					placeholder="Paste or type your URL"
 					aria-label="url"
 					aria-describedby="url"
@@ -82,9 +84,18 @@
 					{#if isURLGenerated}
 						<button
 							on:click={copy}
-							class="inline-block px-6 py-2 border-2 border-fuchsia-600 bg-fuchsia-600 text-white font-medium text-xs leading-tight uppercase hover:bg-white hover:text-fuchsia-600 transition duration-300 ease-in-out"
+							class="inline-block px-6 py-2 border-2 border-emerald-600 bg-emerald-600 text-white font-medium text-xs leading-tight uppercase hover:bg-white hover:text-emerald-600 transition duration-300 ease-in-out"
 							type="button"
 							id="button-copy">Copy</button
+						>
+						<button
+							on:click={() => {
+								url = '';
+								isURLGenerated = false;
+							}}
+							class="inline-block px-6 py-2 border-2 border-rose-600 bg-rose-600 text-white font-medium text-xs leading-tight uppercase hover:bg-white hover:text-rose-600 transition duration-300 ease-in-out"
+							type="button"
+							id="button-reset">Reset</button
 						>
 					{:else}
 						<button
