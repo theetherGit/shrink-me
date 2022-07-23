@@ -29,6 +29,7 @@
 		} else isInvalidURL = true;
 	}
 </script>
+
 <svelte:head>
 	<title>Shrink | Home</title>
 </svelte:head>
